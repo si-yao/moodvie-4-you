@@ -6,18 +6,7 @@ var baseUrl = 'https://movie-senti-predict-master.mybluemix.net/api';
 function submitMood() {
 	var input = document.getElementById("moodfrm");
 	var mood = input.elements[0].value; //mood: AFRIAID,AMUSED,ANGRY,ANNOYED,DONT_CARE,HAPPY,INSPIRED,SAD
-	var targetMood = {
-		"anger":0.0,
-		"anticipation":0.0,
-		"disgust":0.0,
-		"fear":0.0,
-		"joy":0.0,
-		"negative":0.0,
-		"positive":0.0,
-		"sadness":0.0,
-		"surprise":0.0,
-		"trust":0.0
-	};
+	var targetMood = {};
 	targetMood[mood] = 1.0;
   $.ajax({
     url: baseUrl + '/recommend?userid=' + userId + '&token=' + accessToken,
