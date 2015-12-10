@@ -1,11 +1,11 @@
 var result = null;
 var reviewperpage = 10;
-//var baseUrl = 'https://movie-senti-predict-master.mybluemix.net/api';
-var baseUrl = 'http://localhost:3000/api'; //test
+var baseUrl = 'https://movie-senti-predict-master.mybluemix.net/api'; // connect to bluemix
+//var baseUrl = 'http://localhost:3000/api'; //set to this if you have a local server
 // TODO
 function submitMood() {
 	var input = document.getElementById("moodfrm");
-	var mood = input.elements[0].value; //mood: AFRIAID,AMUSED,ANGRY,ANNOYED,DONT_CARE,HAPPY,INSPIRED,SAD
+	var mood = input.elements[0].value; //mood
 	var targetMood = {};
 	targetMood[mood] = 1.0;
   $.ajax({

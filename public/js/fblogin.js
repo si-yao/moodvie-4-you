@@ -7,8 +7,8 @@
 var accessToken;
 var userId;
 var userName;
-//var clientID = '157206561304075';
-var clientID = '158331734522336';//test
+var clientID = '157206561304075'; // set to this if you deploy web pages to bluemix
+//var clientID = '158331734522336';//set to this if you test web page at localhost:63342 (if not, create your own client id at facebook)
 
 function statusChangeCallback(response) {
   console.log('statusChangeCallback');
