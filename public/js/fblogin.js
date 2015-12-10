@@ -7,6 +7,8 @@
 var accessToken;
 var userId;
 var userName;
+var clientID = '157206561304075';
+//var clientID = '158331734522336';//test
 
 function statusChangeCallback(response) {
   console.log('statusChangeCallback');
@@ -35,7 +37,7 @@ function statusChangeCallback(response) {
 
 window.fbAsyncInit = function() {
   FB.init({
-    appId      : '158331734522336',
+    appId      : clientID,
     cookie     : true,  // enable cookies to allow the server to access
                         // the session
     xfbml      : true,  // parse social plugins on this page
@@ -94,6 +96,7 @@ function testAPI() {
     $(".sl-fb-photo").empty();
     $(".sl-fb-photo").append('<img src="'+ pic +'" alt="pic">');
     $(".sl-fb-photo").show();
+    $(".sl-fb-name").text("Hey, " + userName);
   });
 }
 $(document).ready(function(){
