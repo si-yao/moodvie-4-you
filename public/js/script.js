@@ -1,7 +1,7 @@
 var result = null;
 var reviewperpage = 10;
-var baseUrl = 'https://movie-senti-predict-master.mybluemix.net/api';
-//var baseUrl = 'http://localhost:3000/api'; //test
+//var baseUrl = 'https://movie-senti-predict-master.mybluemix.net/api';
+var baseUrl = 'http://localhost:3000/api'; //test
 // TODO
 function submitMood() {
 	var input = document.getElementById("moodfrm");
@@ -29,7 +29,7 @@ function handleSubmitMood() {
 	$movieSec.html(layoutMovies());
 
 	for (var i = 0; i < result.rc.length; ++i) {
-    	createChart(result.rc[i].user_emotions, "sentiment" + i, 'Your Sentiment for "' + result.rc[i].name + '"');
+    	createColumnChart(result.rc[i].user_emotions, "sentiment" + i, 'Your Sentiment for "' + result.rc[i].name + '"');
     }
 
     createChart(result.rc[0].user_personality, "personality", null);
@@ -65,23 +65,52 @@ var createChart = function(jsondata, id, title) {
 	});
 	var data = new google.visualization.arrayToDataTable(arrdata);
 
-    var options;
-    if (title == null) {
+	var options;
+	if (title == null) {
 		options = {
-	        legend:{alignment: "center"},
-	        backgroundColor:"transparent",
-	        chartArea:{left:5,top:5, width:"100%",height:"100%"},
-    	};
-    } else {
-    	options = {
-	    	title:title,
-	        legend:{alignment: "center"},
-	        backgroundColor:"transparent",
-    	};
-    }
+			legend:{alignment: "center"},
+			backgroundColor:"transparent",
+			chartArea:{left:5,top:5, width:"100%",height:"100%"},
+		};
+	} else {
+		options = {
+			title:title,
+			legend:{alignment: "center"},
+			backgroundColor:"transparent",
+		};
+	}
 
-    var chart = new google.visualization.PieChart(document.getElementById(id));
-    chart.draw(data, options);
+	var chart = new google.visualization.PieChart(document.getElementById(id));
+	chart.draw(data, options);
+};
+
+var createColumnChart = function(jsondata, id, title) {
+	var arrdata = [["Type", "Value", { role: "style" }]];
+	var colors = {'anger':'red', 'anticipation':'orange', 'disgust':'purple',
+		'fear':'black', 'joy':'green', 'sadness':'grey', 'surprise':'yellow', 'trust':'blue'};
+	Object.keys(colors).forEach(function(key) {
+		var temp = [key, jsondata[key], colors[key]] ;
+		arrdata.push(temp);
+	});
+	var data = new google.visualization.arrayToDataTable(arrdata);
+
+	var options;
+	if (title == null) {
+		options = {
+			backgroundColor:"transparent",
+			chartArea:{left:5,top:5, width:"100%",height:"100%"},
+			vAxis: {maxValue : 0.5}
+		};
+	} else {
+		options = {
+			title:title,
+			backgroundColor:"transparent",
+			vAxis: {maxValue : 0.5}
+		};
+	}
+
+	var chart = new google.visualization.ColumnChart(document.getElementById(id));
+	chart.draw(data, options);
 };
 
 function readMore(movieId) {
@@ -119,13 +148,13 @@ function handleSubmitMovie(pagenum) {
 		+ '</div>';
 	$reviewSec.html(htmlText);
 
-	createChart(result.user_emotions, "sentiment", null);
+	createColumnChart(result.user_emotions, "sentiment", "Your sentiment for this movie");
 
 	var rangemin = (pagenum - 1) * reviewperpage;
 	var rangemax = rangemin + reviewperpage;
 	for (var i = rangemin; i < rangemax && i < result.reviews.length; i++) {
     	createChart(result.reviews[i].personality, "reviewpersonality" + i, "User Personality");
-    	createChart(result.reviews[i].emotions, "review" + i, 'User Sentiment for "' + result.name + '"');
+		createColumnChart(result.reviews[i].emotions, "review" + i, 'User Sentiment for "' + result.name + '"');
     }
 
     createChart(result.user_personality, "personality", null);

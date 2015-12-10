@@ -7,8 +7,8 @@
 var accessToken;
 var userId;
 var userName;
-var clientID = '157206561304075';
-//var clientID = '158331734522336';//test
+//var clientID = '157206561304075';
+var clientID = '158331734522336';//test
 
 function statusChangeCallback(response) {
   console.log('statusChangeCallback');
