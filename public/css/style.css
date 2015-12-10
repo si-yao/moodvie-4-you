@@ -416,3 +416,12 @@ p.infopost a.com span {
 a {
 	outline:none;
 }
+
+.sl-fb-photo {
+	width: 64px;
+	height: 64px;
+}
+
+.weakHidden {
+	display: none;
+}

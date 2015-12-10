@@ -11,7 +11,8 @@
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript" src="js/coin-slider.min.js"></script>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
+  <script type="text/javascript" src="js/fblogin.js"></script>
+  <script type="text/javascript">
   google.load("visualization", "1.1", {packages:["corechart"]});
   window.onload = function() {
     result = JSON.parse(sessionStorage.getItem('movieResult')); 
@@ -31,6 +32,10 @@
           <li><a href="mood.html"><span>Mood</span></a></li>
           <li class="active"><a href="movie.html"><span>Movie</span></a></li>
           <li><a href="about.html"><span>About Us</span></a></li>
+          <li class="sl-fb-login">
+            <fb:login-button  scope="public_profile,email,user_posts" onlogin="checkLoginState();">
+            </fb:login-button></li>
+          <li class="sl-fb-photo weakHidden"></li>
         </ul>
       </div>
       <div class="logo">
