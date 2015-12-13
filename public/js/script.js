@@ -141,11 +141,25 @@ function handleSubmitMovie(pagenum) {
 
 	var $reviewSec = $("#reviewSec");
 	var htmlText = "";
-	htmlText = '<div class="article"><p><h2><span>Sentiment for Movie "' + result.name + '"</span></h2></p><div id="sentiment"></div>'
-		+ '<div><p></p><p></p><h2><span>Reviews for Movie "' + result.name + '"</h2><div class="clr"></div></div>'
-		+ layoutReviews(pagenum)
-		+ layoutPages(pagenum)
-		+ '</div>';
+
+	var name = result.name;
+	var imageurl = result.imageurl;
+	var runtime = result.runtime;
+	var date = result.rlsdate;
+	var summary = result.summary;
+	var genre = result.genre;
+	var score = result.avguserscore;
+
+	htmlText += '<div class="article"><h2><span>' + name + '</span></h2>' 
+			+ '<p class="infopost">' + runtime + ' | ' +  genre + ' | <span class="date"> ' + date + '</span> <a class="com">Rating <span>' + score + '</span></a></p><div class="clr"></div>' 
+			+ '<div class="img"><img src="' + imageurl + '" width="200" height="278" alt="" class="fl" /></div>'
+			+ '<div class="post_content"><p>' + summary + '</p>' + '<div id="sentiment"></div></div>'
+			+ '<div class="clr"></div>'
+			+ '<div><p></p><p></p><h2><span>Reviews for Movie "' + name + '"</h2><div class="clr"></div></div>'
+			+ layoutReviews(pagenum)
+			+ layoutPages(pagenum)
+			+ '</div>';
+
 	$reviewSec.html(htmlText);
 
 	createColumnChart(result.user_emotions, "sentiment", "Your sentiment for this movie");
