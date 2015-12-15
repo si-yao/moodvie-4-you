@@ -2,7 +2,7 @@ var result = null;
 var reviewperpage = 10;
 var baseUrl = 'https://movie-senti-predict-master.mybluemix.net/api'; // connect to bluemix
 //var baseUrl = 'http://localhost:3000/api'; //set to this if you have a local server
-// TODO
+
 function submitMood() {
 	var input = document.getElementById("moodfrm");
 	var mood = input.elements[0].value; //mood
@@ -50,7 +50,7 @@ var layoutMovies = function() {
 
 		htmlText += '<div class="article"><h2><span>' + name + '</span></h2>' 
 				+ '<p class="infopost">' + runtime + ' | ' +  genre + ' | <span class="date"> ' + date + '</span> <a class="com">Rating <span>' + score + '</span></a></p><div class="clr"></div>' 
-				+ '<div class="img"><img src="' + imageurl + '" width="200" height="278" alt="" class="fl" /></div>'
+				+ '<div class="img" id="movie-img" data-name="'+ name +'"><img src="' + imageurl + '" width="200" height="278" alt="" class="fl" referrerpolicy="no-referrer"/></div>'
 				+ '<div class="post_content"><p>' + summary + '</p>' + '<div id="sentiment' + i + '" style="width: 410px; height: 280px;"></div></div>'
 				+ '<div class="clr"></div><p class="spec"><a href="movie.html" class="rm" onclick="readMore(' + i +')">Read more</a></p><div class="clr"></div></div>';
     }
@@ -117,7 +117,6 @@ function readMore(movieId) {
 	sessionStorage.setItem('movieResult', JSON.stringify(result.rc[movieId]));
 }
 
-// TODO
 function submitMovie() {
 	var input = document.getElementById("moviefrm");
 	var movie = input.elements[0].value; //movie: not empty, no size limit
@@ -152,9 +151,10 @@ function handleSubmitMovie(pagenum) {
 
 	htmlText += '<div class="article"><h2><span>' + name + '</span></h2>' 
 			+ '<p class="infopost">' + runtime + ' | ' +  genre + ' | <span class="date"> ' + date + '</span> <a class="com">Rating <span>' + score + '</span></a></p><div class="clr"></div>' 
-			+ '<div class="img"><img src="' + imageurl + '" width="200" height="278" alt="" class="fl" /></div>'
-			+ '<div class="post_content"><p>' + summary + '</p>' + '<div id="sentiment"></div></div>'
+			+ '<div class="img" id="movie-img" data-name="'+ name +'"><img src="' + imageurl + '" width="200" height="278" alt="" class="fl" referrerpolicy="no-referrer"/></div>'
+			+ '<div class="post_content"><p>' + summary + '</p>' + '<div id="att"></div></div>'
 			+ '<div class="clr"></div>'
+			+ '<div class="article"><p><h2><span>Sentiment for Movie "' + result.name + '"</span></h2></p><div id="sentiment"></div>'
 			+ '<div><p></p><p></p><h2><span>Reviews for Movie "' + name + '"</h2><div class="clr"></div></div>'
 			+ layoutReviews(pagenum)
 			+ layoutPages(pagenum)
@@ -163,7 +163,7 @@ function handleSubmitMovie(pagenum) {
 	$reviewSec.html(htmlText);
 
 	createColumnChart(result.user_emotions, "sentiment", "Your sentiment for this movie");
-
+	createChart(result.user_att, "att", "Your attitude for this movie");
 	var rangemin = (pagenum - 1) * reviewperpage;
 	var rangemax = rangemin + reviewperpage;
 	for (var i = rangemin; i < rangemax && i < result.reviews.length; i++) {
