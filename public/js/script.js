@@ -99,13 +99,13 @@ var createColumnChart = function(jsondata, id, title) {
 		options = {
 			backgroundColor:"transparent",
 			chartArea:{left:5,top:5, width:"100%",height:"100%"},
-			vAxis: {maxValue : 0.5}
+			vAxis: {maxValue : 0.9}
 		};
 	} else {
 		options = {
 			title:title,
 			backgroundColor:"transparent",
-			vAxis: {maxValue : 0.5}
+			vAxis: {maxValue : 0.9}
 		};
 	}
 
