@@ -23,11 +23,13 @@ function submitMood() {
 }
 
 function handleSubmitMood() {
+	if (!result.rc) {
+		alert(JSON.stringify(result));
+	}
 	console.log(result);
 
 	var $movieSec = $("#movieSec");
 	$movieSec.html(layoutMovies());
-
 	for (var i = 0; i < result.rc.length; ++i) {
     	createColumnChart(result.rc[i].user_emotions, "sentiment" + i, 'Your Sentiment for "' + result.rc[i].name + '"');
     }
@@ -137,7 +139,9 @@ function submitMovie() {
 
 function handleSubmitMovie(pagenum) {
 	console.log(result);
-
+	if (!result.name) {
+		alert(JSON.stringify(result));
+	}
 	var $reviewSec = $("#reviewSec");
 	var htmlText = "";
 
